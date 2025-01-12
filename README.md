@@ -1,66 +1,48 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Genealogy Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Description
 
-## About Laravel
+Ce projet est une application de généalogie permettant de créer des fiches de personnes, d'ajouter des relations familiales et de calculer le degré de parenté entre deux personnes. Le système de gestion des données repose sur une base de données MySQL avec des migrations Laravel pour la gestion des tables. Ce projet permet également aux utilisateurs de proposer des modifications sur les informations des personnes ou les relations familiales, qui seront ensuite validées par la communauté.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Objectifs
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Créer un système de gestion des personnes et de leurs relations familiales.
+- Implémenter un système de validation de modifications communautaires.
+- Calculer le degré de parenté entre deux personnes.
+- Mettre en place un environnement de développement Laravel avec MySQL.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Prérequis
 
-## Learning Laravel
+- PHP 7.4 ou supérieur
+- Laravel 8.x ou supérieur
+- MySQL 5.7 ou supérieur
+- Composer (pour la gestion des dépendances)
+- Un compte GitHub pour héberger le code
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Téléchargez directement le dossier, et changez juste le nom de votre base de donnée dans le fichier .env
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Partie 3
+ 1. le lien pour le générateur de schéma dbdiagram.io: https://dbdiagram.io/d/678426986b7fa355c3a4111d
+ 2. Évolution des Données : Propositions de Modifications et Validation:
+    A. Proposition de Modification :
+Lorsqu'un utilisateur souhaite proposer une modification (par exemple, ajouter une relation ou modifier une personne), une proposition de modification est créée.
+Cette proposition ne modifie pas immédiatement les données existantes dans la base. Elle est stockée dans une table dédiée des propositions avec les informations suivantes :
+L'ID de la personne ou de la relation concernée.
+Le type de modification proposée (ajout, mise à jour, suppression).
+L'ID de l'utilisateur ayant proposé la modification.
+L'état de la proposition (en attente, validée, rejetée).
+    B.Validation des Modifications :
+Les propositions de modification doivent être validées par la communauté avant d'être appliquées aux données principales.
 
-## Laravel Sponsors
+Une proposition est soumise à la validation de plusieurs utilisateurs (au moins 3).
+Chaque utilisateur peut accepter ou rejeter la proposition.
+Lorsqu'un nombre suffisant de validations est atteint, la proposition devient validée et la modification est appliquée aux données existantes (par exemple, une relation est ajoutée ou les informations d'une personne sont mises à jour).
+Si la proposition est rejetée, aucune modification n'est effectuée.
+    C.Mise à Jour des Données :
+Lorsque la proposition est validée, les données dans les tables principales (personnes, relations) sont mises à jour ou créées selon le type de modification :
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Si la proposition était un ajout de relation, une nouvelle entrée est créée dans la table des relations.
+Si c'était une mise à jour d'une personne (ex. changement de nom), l'enregistrement de cette personne dans la table des personnes est modifié.
+Si c'était une suppression, l'entrée concernée est supprimée.
